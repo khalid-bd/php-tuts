@@ -10,19 +10,26 @@ class Authentification
             $form = $_POST;
 
             try {
-                if(!isValid($form)) {
+                if(!$this->isValid($form)) {
                     throw new Exception("Le formulaire n'est pas valide", 1);
                 } else {
-                    $request = $db->exec("SELECT * FROM users");
-                    // $request->bindParam(':email', $email);
-                    // $request->fetch();
+                    $request = $db->query("SELECT email, password, name, role FROM users");
+                        // $request->fetch();
 
-                    var_dump($request);
-
-
-                    if($request->rowCount() == 0){
-                        echo "exists! cannot insert";
+                    while ($response = $request->fetch()){
+                        $dbEmail = $response['email'];
+                        $dbPassword = $response['password'];
+                        $dbName = $response['name'];
+                        $dbRole = $response['role'];
                     }
+
+                    if($form['email'] == $dbEmail && $form['password'] == $dbPassword) {
+                        $this->connectUser($dbEmail, $dbName, $dbRole);
+                    } else {
+                        throw new Exception("Identifiants incorrecte", 1);
+                        
+                    }
+
                 }
             } catch(Exception $e) {
                 var_dump($e->getMessage());
@@ -33,25 +40,51 @@ class Authentification
                 'template' => "index"
             );
         }
+
+        if(!isset($_SESSION['is_connected'])) {
+            return array(
+                'template' => "login"
+            );
+        } else {
+            return array(
+                'template' => 'index'
+            );
+        }
+    }
+
+    function isValid($form)
+    {
+        if(filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
+            $error = false;
+        }
+
+        if(!$error) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function connectUser($email, $name, $role)
+    {
+        if(!session_status()){
+            session_start();
+        }
+        $_SESSION['user_name']  = $name;
+        $_SESSION['user_email'] = $email;
+        $_SESSION['is_connected'] = true;
+        $_SESSION['role'] = $role;
+    }
+
+    function disconnectAction()
+    {
+        if(session_status()) {
+            session_start();
+            session_destroy();
+        }
+
         return array(
-            'template' => "login"
+            'template' => 'login'
         );
     }
 }
-
-function isValid($form)
-{
-    if(filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
-        $error = false;
-    }
-
-    if(!$error) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-
-                
-

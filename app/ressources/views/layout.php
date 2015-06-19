@@ -39,12 +39,12 @@
 
             <div class="subNav pull-right">
                 <ul class="nav nav-pills">
-                    <?php if (isset($_SESSION['firstName']) && $_SESSION['firstName'] != null): ?>
-                        <li><span>Bonjour <?= ucfirst($_SESSION['firstName']); ?></span></li>
-                        <li><a href="logout.php" class="">Logout</a></li>
+                    <?php if (isset($_SESSION['is_connected'])): ?>
+                        <li><span>Bonjour <?= ucfirst($_SESSION['user_name']); ?></span></li>
+                        <li class="active"><a href="?bundle=authentification&action=disconnect" class="">Logout</a></li>
 
                     <?php else: ?>
-                        <li class="active"><a href="?bundle=authentification&action=login" class="btn">Login</a></li>
+                        <li class="active danger"><a href="?bundle=authentification&action=login" class="btn">Login</a></li>
                     <?php endif; ?>
                 </ul>
             </div>

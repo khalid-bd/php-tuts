@@ -3,5 +3,5 @@
     $action = [
         "login",
         "register",
-        "check"
+        "disconnect"
     ];

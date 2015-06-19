@@ -1,7 +1,7 @@
 <?php
 
 // Vérification sur les bundles(Modules)
-$bundles = ['app', 'authentification', 'errors', 'evaluation'];
+$bundles = ['app', 'authentification', 'errors', 'evaluation', 'users'];
 
 if(isset($_GET) && !empty($_GET))
 {
