@@ -26,7 +26,7 @@ class Authentification
                     if($form['email'] == $dbEmail && $form['password'] == $dbPassword) {
                         $this->connectUser($dbEmail, $dbName, $dbRole);
                     } else {
-                        throw new Exception("Identifiants incorrecte", 1);
+                        throw new \Exception("Identifiants incorrecte", 1);
                         
                     }
 

@@ -41,10 +41,10 @@
                 <ul class="nav nav-pills">
                     <?php if (isset($_SESSION['is_connected'])): ?>
                         <li><span>Bonjour <?= ucfirst($_SESSION['user_name']); ?></span></li>
-                        <li class="active"><a href="?bundle=authentification&action=disconnect" class="">Logout</a></li>
+                        <li class=""><a href="?bundle=authentification&action=disconnect" class="btn btn-danger">Logout</a></li>
 
                     <?php else: ?>
-                        <li class="active danger"><a href="?bundle=authentification&action=login" class="btn">Login</a></li>
+                        <li class="active"><a href="?bundle=authentification&action=login" class="btn">Login</a></li>
                     <?php endif; ?>
                 </ul>
             </div>

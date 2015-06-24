@@ -18,6 +18,22 @@ class Users
     private $created;
     private $startingDate;
     private $length;
+    
+    public function populate(array $data)
+    {
+        foreach ($data as $key => $value) {
+
+        $setter = 'set'.ucfirst($key);
+// var_dump($setter);
+        if (method_exists($this, $setter)) {
+            $this->$setter($value);
+            }
+        }
+    }
+
+    public function __construct()
+    {
+    }
 
     public function getId()
     {
